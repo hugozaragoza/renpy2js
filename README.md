@@ -1,9 +1,31 @@
 # renpy2js
 
-Experimental engine to render renpy stories in HTML with pure JavaScript
+Engine to convert renpy script (interactive stories) into JavaScript HTML interactive experience.
+
+(Python Django is used only for cetralised logging server and for deployment, the story experience runs in pure client JavaScript).
 
 Hugo Ballester 2021
 
+## Overview
+
+Data flow:
+  * StoryDirectory is where the story script (script.rpy) and the images (img/) are.
+  * CodeDirectory is where this project is. 
+  * CodeDirectory/main.py reads the StoryDirectory and creates an Output directory containing the HTML story experience.
+  * Output directory contains:
+    * script.js : story generated
+    * utilities (from CodeDirectory/html):
+      * renpy2js.js : display library
+      * index.html : web interaction and story loading
+      * style.css
+      * styles.html : debugging styles
+    * img/: (copy of StoryDirectory/img)
+    * data/ : story debugging resources
+
+
+
+
+## Renpy Compatibility
 ### Labels:
 
 PARTIALLY IMPLEMENTED:
