@@ -3,32 +3,34 @@ a, u {
     color: inherit;
 }
 
-#fixedbutton {
+
+#bottom {
+    touch-action: manipulation;
+    border: 2px solid blue;
+    font-size: 32px;
+
+    display: flex;
     position: fixed;
     bottom: 1px;
     right: 1px;
-    /*border: 1px solid grey;*/
-    color: #E0E0E0;
+}
 
-    height: 75px;
-    width: 75px;
+.bottom_action{
+    border: 2px solid red;
     border-radius: 100%;
-    background-color: #E0E0E0;
-    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
 
-    font-size: 32px;
     text-align: center;
     vertical-align: middle;
-
-
-}
+   }
 
 #canvas {
     touch-action: manipulation;
 
     height: 80%;
     overflow-y: scroll;
-    /*border: 2px solid red;*/
+    border: 2px solid red;
 
     font-size: 32px;
     font-family: Palatino;
@@ -128,7 +130,6 @@ p {
 }
 
 .line {
-
 }
 
 #debug {

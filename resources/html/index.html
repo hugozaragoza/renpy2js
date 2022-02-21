@@ -22,14 +22,16 @@
 </div>
 
 <div id="bottom">
-    <div id="fixedbutton">🔙</div>
+    <div id="button_back" class="bottom_action">🔙</div>
+    <div id="button_plus" class="bottom_action">+</div>
+    <div id="button_minus" class="bottom_action">-</div>
 </div>
 
 <script>
     // CANVAS SETUP:
     // canvas = document.getElementById('canvas')
     //canvas.addEventListener('click', (event) => { if (event.target == canvas) { revealItem(1); } }, true);
-    document.addEventListener('click', (event) => {
+    canvas.addEventListener('click', (event) => {
         log("CLICK")
         revealItem(1);
     }, true);
@@ -57,11 +59,9 @@
 
     })
 
-    function fixedbutton_click(event) {
-        click_go_back();
-    }
-
-    document.getElementById('fixedbutton').addEventListener('click', fixedbutton_click, true);
+    document.getElementById('button_back').addEventListener('click', action_back, true);
+    document.getElementById('button_plus').addEventListener('click', function(e){action_fontsize(+8);e.stopPropagation();}, true);
+    document.getElementById('button_minus').addEventListener('click', function(e){action_fontsize(-8);e.stopPropagation();}, true);
 
     // START RENDER AND INTERACTION:
     render_init()

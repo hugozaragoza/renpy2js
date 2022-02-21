@@ -79,7 +79,7 @@ function assert(act, des, msg = "") {
 // --------------------------------------------------------
 // ACTIONS
 // --------------------------------------------------------
-function click_go_back() {
+function action_back() {
     if (choices_taken.length > 0) {
         choices_taken.pop()
     }
@@ -90,6 +90,16 @@ function click_go_back() {
     }
     localStorage.setItem(FAST_FORWARD, "true")
     location.reload();
+}
+
+function action_fontsize(delta) {
+    /*var e = $('.line').first().css('font-size').replace("px", "");*/
+    var e = $('#canvas').css('font-size');
+    e = delta+parseInt(e.replace("px", ""))
+    e = e+"px"
+/*    $('.line').css("font-size" , e);*/
+    $('html > head').append($('<style>#canvas { font-size:'+e+'; }</style>'));
+
 }
 
 // --------------------------------------------------------
@@ -229,7 +239,7 @@ function render_choices(choices, parent) {
         log(choice_id, "choice_id")
         newParagraph = render_par(choice_msg, parent, false)
         newParagraph.id = choice_id
-        newParagraph.classList.add("choice_pending", parent.id);
+        newParagraph.classList.add("choice_pending", parent.id,"line");
         newParagraph.addEventListener('click', click_on_choice)
         if (read_cookies()[choice_id]) {
             newParagraph.classList.add("choice_visited");
@@ -293,8 +303,8 @@ function render_sayline(sayline, parent) {
         let nbsp = "&nbsp;&nbsp;"
         let classes = 'charname' + (lastChar == char ? ' charname_cont' : '')
         lastChar = char
-        line = "<span class='" + classes + "'>" + char.toUpperCase() + ":" + nbsp + "</span>"
-        line += "<span class='charline'>" + say + "</span>"
+        line = "<span class='" + classes + " line'>" + char.toUpperCase() + ":" + nbsp + "</span>"
+        line += "<span class='charline line'>" + say + "</span>"
     } else {
         lastChar = null
         line += "<span class='line'>" + say + "</span>"
