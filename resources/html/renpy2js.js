@@ -145,9 +145,10 @@ function fromChoiceId(id) {
 function click_on_choice(event, id = null) {
     hlog("click_on_choice" + (id ? " " + id : ""))
     if (id == null) { // get info from event
-        var parent = event.path[1]
+        id = fromChoiceId(event.srcElement.id)        
+        var path = event.path || (event.composedPath && event.composedPath()); /* IPhone7 does not implement event.path */
+        var parent = path[1]
         var divid = parent.id
-        id = fromChoiceId(event.path[0].id)
     } else { // get info from id
         var parent = document.getElementById(id).parentElement
         var divid = parent.id

@@ -8,21 +8,20 @@ Hugo Ballester 2021
 
 ## Overview
 
+python main.py --help
+
 Data flow:
-  * StoryDirectory is where the story script (script.rpy) and the images (img/) are.
   * CodeDirectory is where this project is. 
-  * CodeDirectory/main.py reads the StoryDirectory and creates an Output directory containing the HTML story experience.
-  * Output directory contains:
+  * StoryDirectory is where the story script (script.rpy) and the images (img/) are.
+  * OutDirectory is where the story web will be created, under directory StoryName.
+  * CodeDirectory/main.py reads the StoryDirectory and creates the OutDirectory/StoryName containing the story website:
     * script.js : story generated
-    * utilities (from CodeDirectory/html):
-      * renpy2js.js : display library
-      * index.html : web interaction and story loading
-      * style.css
-      * styles.html : debugging styles
+    * renpy2js.js : display library
+    * index.html : web interaction and story loading
+    * style.css
+    * styles.html : debugging styles
     * img/: (copy of StoryDirectory/img)
-    * data/ : story debugging resources
-
-
+  * it also copies the logger app to OutDirectory/logger
 
 
 ## Renpy Compatibility
