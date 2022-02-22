@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2022.6">
+  <style type="text/css">
+
+/* ====== GRID LAYOUT =================== */
+.ctnr {
+  display: grid;
+  grid-template-rows: auto 1fr auto;  /* key rule */
+  height: 100vh;
+  grid-template-areas: "header" "main" "footer";
+}
+
+header {
+  grid-area: header;
+  background: turquoise;
+}
+
+main {
+  grid-area: main;
+  background: orange;
+}
+
+footer {
+  grid-area: footer;
+  background: yellow;
+  height: 2em;
+}
+
+body {
+  margin: 0;
+}
+
+/* ------------------------------------- */
+
+  </style>
+</head>
+<body>
+
+<div class="ctnr">
+  <header>header</header>
+  <main>main</main>
+  <footer>footer</footer>
+</div>
+
+</body>
+</html>
