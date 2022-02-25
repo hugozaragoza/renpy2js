@@ -30,7 +30,9 @@ function render_init() {
     }
     window.context.set(CHOICE_STACK, s);
 
-    render_par("Click to start...", canvas, false)
+    p = render_par("Click to start...", canvas, false)
+    p.classList.add("action_color")
+    log(p.classlist,"CLASSES")
     render_debug()
     render_start()
 
@@ -61,10 +63,19 @@ function log(msg, header = "") {
     }
 }
 
-function hlog(msg) {
+function hlog(msg, central_log=false) {
     if (debug_log) {
         console.log(msg + " <========================")
     }
+    if (central_log) {
+        central_log_post(msg);
+    }
+}
+
+function central_log_post(msg) {
+    // TODO: encode as object
+    url="../logger/public/index.php/logger/log/"+story_name+"/"+user_name+"/"+msg
+    $.post(url);
 }
 
 function warn(msg) {
@@ -80,6 +91,7 @@ function assert(act, des, msg = "") {
 // ACTIONS
 // --------------------------------------------------------
 function action_back() {
+    hlog("BACK",true)
     if (choices_taken.length > 0) {
         choices_taken.pop()
     }
@@ -97,9 +109,8 @@ function action_fontsize(delta) {
     var e = $('#canvas').css('font-size');
     e = delta+parseInt(e.replace("px", ""))
     e = e+"px"
-/*    $('.line').css("font-size" , e);*/
     $('html > head').append($('<style>#canvas { font-size:'+e+'; }</style>'));
-
+    hlog( "ACTION: Font to "+e,true);
 }
 
 // --------------------------------------------------------
@@ -124,7 +135,7 @@ function render_debug() {
 
 }
 
-function revealItem(n) {
+function revealItem(n=999) {
     //hlog("revealItem")
     render_debug();
     var div = document.getElementById("canvas")
@@ -153,7 +164,7 @@ function fromChoiceId(id) {
 }
 
 function click_on_choice(event, id = null) {
-    hlog("click_on_choice" + (id ? " " + id : ""))
+    hlog("click_on_choice" + (id ? " " + id : ""), false)
     if (id == null) { // get info from event
         id = fromChoiceId(event.srcElement.id)        
         var path = event.path || (event.composedPath && event.composedPath()); /* IPhone7 does not implement event.path */
@@ -166,9 +177,10 @@ function click_on_choice(event, id = null) {
     console.assert(parent, "!!! failed to find choice parent")
     console.assert(divid, "!!! failed to find choice divid")
     console.assert(id, "!!! failed to find id")
+    central_log_post("click_on_choice: " + id)
 
     choices_taken.push(id)
-    log(choices_taken, "NEW choices_taken")
+/*    log(choices_taken, "NEW choices_taken")*/
 
     var sayblocks = data[id]
 //    log(sayblocks, "sayblock")
@@ -458,6 +470,7 @@ function render_end(parent) {
     render_par("(You read " + current + " lines of the story in this run)", parent);
     render_par("(Your record is: " + max + ")", parent);
     render_par('<a class="choice_pending" href=\".\">RELOAD page to re-start</a>', parent)
+    central_log_post("END: read "+current+ " lines, record is: "+max)
     return
 }
 

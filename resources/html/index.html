@@ -26,12 +26,20 @@
     </main>
 
     <footer>
-        <span id="button_minus" class="bottom_action">➖</span>
-        <span id="button_plus" class="bottom_action">➕</span>
-        <span id="button_back" class="bottom_action">🔙</span>
+        <span id="button_minus" class="bottom_action">a</span>
+        <span id="button_plus" class="bottom_action">A</span>
+        <span id="button_down" class="bottom_action">⇩</span>
+        <span id="button_back" class="bottom_action">⇦</span>
     </footer>
 </div>
 <script>
+    // USER SETUP ======================================================
+    var user_name = Math.floor((Math.random()*1000));
+    var story_name = "FirstResponse"
+    // -----------------------------------------------------------------
+
+    // =================================================================
+
     // CANVAS SETUP:
     // canvas = document.getElementById('canvas')
     //canvas.addEventListener('click', (event) => { if (event.target == canvas) { revealItem(1); } }, true);
@@ -46,7 +54,7 @@
         var key = event.key
 
         if (key == " ") {
-            revealItem(999)
+            revealItem()
         } else if (window.debug && key == "d") {
             window.context.get("__SHOW_DEBUG") ? window.context.set("__SHOW_DEBUG", false) : window.context.set("__SHOW_DEBUG", true)
             render_debug();
@@ -64,6 +72,8 @@
     })
 
     document.getElementById('button_back').addEventListener('click', action_back, true);
+    document.getElementById('button_down').addEventListener('click', function(e){revealItem();
+    }, true);
     document.getElementById('button_plus').addEventListener('click', function(e){action_fontsize(+8);e.stopPropagation();}, true);
     document.getElementById('button_minus').addEventListener('click', function(e){action_fontsize(-8);e.stopPropagation();}, true);
 

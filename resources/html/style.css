@@ -1,8 +1,8 @@
 /* ====== GRID LAYOUT =================== */
 .ctnr {
   display: grid;
-  grid-template-rows: auto 1fr 5em;
-  height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
   grid-template-areas: "header" "main" "footer";
 }
 
@@ -17,36 +17,43 @@ main {
 
   overflow: scroll;
 
-/*  background: orange; */
+/* background: orange; */
 }
 
 footer {
-  grid-area: footer;
-  height: 2em;
+  touch-action: manipulation;
 
-  /*background: yellow;*/
+  grid-area: footer;
+/*  background: yellow; */
 }
 
 body {
-  margin: 0;
-  background-color: #FAFAFA;
+    /* stop overflow: */
+    width: 100%;
+    height: 100%;
+    /* mobile viewport bug fix */
+    height: -webkit-fill-available;
+
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 /* ------------------------------------- */
-
-footer {
-    touch-action: manipulation;
-    font-size: 32px;
-}
 
 a, u {
     text-decoration: none;
     color: inherit;
 }
 
+.bottom_action, .action_color {
+    color:  #53e2bb;
+    font-size: 64px;
+}
+
 .bottom_action{
     border-radius: 100%;
-    height: 1.5em;
-    width: 1.5em;
 
     text-align: center;
     vertical-align: middle;
@@ -58,11 +65,13 @@ a, u {
 
 #canvas {
     touch-action: manipulation;
-    overflow-y: scroll;
-    font-size: 32px;
-    font-family: Palatino;
 
     height: 100%;
+    overflow-y: scroll;+
+    font-family: Palatino;
+    font-size: 3em;
+
+    margin-left: 0.5em;
 
     /*border: 2px solid black;*/
 }
@@ -97,13 +106,14 @@ img {
 }
 
 html, body {
+    /* mobile viewport bug fix */
+    height: -webkit-fill-available;
+
     /* force same font everywhere on mobiles */
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
-
-    height: 100%;
 
     /* stop double-click zoom */
     touch-action: manipulation;
