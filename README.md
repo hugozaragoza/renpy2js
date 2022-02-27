@@ -61,3 +61,5 @@ $ VAR_NAME = VAR_NAME2
 conditional menus:
 "Hot Springs, AR" (300) if secret_unlocked:
         jump hot_springs_trip
+
+comment # line without chars yields parse error

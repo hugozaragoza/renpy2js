@@ -1,7 +1,7 @@
 from lark import Lark
 from lark.indenter import Indenter
 
-# I tried to use parsing indentation method from [1] but failed to meet some cases, so I ended up forcing menu endings with #:menu
+# I tried to use parsing indentation method from [1] but failed to meet some cases, so I ended up forcing some block endings with #:BLOCK_NAME
 # [1] https://lark-parser.readthedocs.io/en/latest/examples/indented_tree.html
 from renpy_parser import transformer
 from renpy_parser.utils import debug, mywarn
@@ -10,16 +10,13 @@ from renpy_parser.utils import debug, mywarn
 def build_parser():
     tree_grammar = r"""
 
-
-
-
 start: _code_line* label_tree+
 
 label_tree: label_line (_sayblock | menu_tree)
 
 menu_tree: _code_or_line* _MENU_START _code_or_line* choice_tree+ _MENU_END
-choice_tree: choice_line (_sayblock|menu_tree)
 
+choice_tree: choice_line (_sayblock|menu_tree)
 
 _sayblock : _code_or_line* jump_line
 

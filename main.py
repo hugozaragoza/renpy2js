@@ -107,7 +107,8 @@ if __name__ == "__main__":
     # 1. PARSE STORY
     with io.open(script_file, mode="r", encoding="utf-8-sig") as fh:  # renpy script.rpy is utf8
             renpy_str = fh.read()
-
+            if renpy_str[-1]!="\n": # add last \n if missing
+                renpy_str+="\n"
     diclabels, debug = parse_renpy(renpy_str)
 
     # 2. WRITE WEB STORY

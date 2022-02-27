@@ -120,7 +120,7 @@ label start:
 """
      , None),
 ])
-def test_parse1(source, des):
+def test_parse(source, des):
     parser = parse_factory.build_parser()
     res = parser.parse(source).pretty()
     if des is not None:
@@ -193,7 +193,7 @@ label complexIF:
 
         # -----------------------
         ("""\
-label start:
+label simple_menu:
     menu:
         "say1":
             "first response"
@@ -204,7 +204,7 @@ label start:
     #:menu
 """,
          [('label_tree',
-           ('start',
+           ('simple_menu',
             [('menu_tree',
               [('menu_choice',
                 ('choice_label__say1_0',
@@ -214,6 +214,31 @@ label start:
                 ('choice_label__say2_0',
                  'say2 (MISSING)',
                  [('say_line', ('', 'something here')), ('jump_line', 'end')]))])]))],
+         {},
+         ),
+
+        # -----------------------
+        ("""\
+label simple_menu2:
+    menu:
+        "say1":
+            "first response"
+            jump end
+        "say2":
+            jump end   
+    #:menu
+""",
+         [('label_tree',
+           ('simple_menu2',
+            [('menu_tree',
+              [('menu_choice',
+                ('choice_label__say1_0',
+                 'say1 (MISSING)',
+                 [('say_line', ('', 'first response')), ('jump_line', 'end')])),
+               ('menu_choice',
+                ('choice_label__say2_0',
+                 'say2 (MISSING)',
+                 [('jump_line', 'end')]))])]))],
          {},
          ),
 
@@ -302,9 +327,9 @@ label arthimetic:
     #:if
     jump end
 """,
-         [('label_tree', ('arthimetic', [('code_line', "window.context.set('a',(window.context.get('b')||0) + 1)"), (
+         [('label_tree', ('arthimetic', [('code_line', "window.context.set('a',(window.context.get('B')||0) + 1)"), (
                  'if_tree',
-                 [('if_start', "(window.context.get('b')||0)==(window.context.get('a')||0) + 1",
+                 [('if_start', "(window.context.get('B')||0)==(window.context.get('a')||0) + 1",
                    [('say_line', ('', 'yes'))])]),
                                          ('jump_line', 'end')]))],
          {},

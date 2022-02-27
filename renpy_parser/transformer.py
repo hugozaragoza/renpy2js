@@ -91,10 +91,10 @@ class Transformer1(Transformer):
 
     def choice_tree(self, items):
         key, title, tree = (items[0][1], items[0][2], items[1:])
+        title = self.resolve_characters(title)
         if not tree[-1]:  # remove jump __none => ()
             tree = tree[0:-1]
-        title = self.resolve_characters(title)
-        if tree[-1][0] == "jump_line":
+        if len(tree) and tree[-1][0] == "jump_line":
             if tree[-1][1] not in self._defined_labels:
                 title += " (MISSING)"
         self.addtoLabels(key, tree)
