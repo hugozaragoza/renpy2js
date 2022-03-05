@@ -1,10 +1,8 @@
 from lark import Lark
-from lark.indenter import Indenter
 
 # I tried to use parsing indentation method from [1] but failed to meet some cases, so I ended up forcing some block endings with #:BLOCK_NAME
 # [1] https://lark-parser.readthedocs.io/en/latest/examples/indented_tree.html
 from renpy_parser import transformer
-from renpy_parser.utils import debug, mywarn
 
 
 def build_parser():
@@ -32,11 +30,10 @@ if_start      : if_head (_sayblock | menu_tree | (_code_or_line+))
 if_else      : "else" ":" _NL (_sayblock | menu_tree)
 _if_end       : "#:if" _NL
 
-if_head : "if" KEYWORD IF_OP /[^:]+/ ":" _NL
-IF_OP : "=="|"=>"|"=<"|">"|"<"
+if_head : "if" /[^:\n]+/ ":" _NL
 _code_line    : code_line_def | code_line_var
 code_line_def : "define" /[^\n]+/ _NL
-code_line_var : "$" /[^\n]+/ _NL
+code_line_var : "$" /[^:\n]+/ _NL
 
 _MENU_START   : "menu:" _NL
 _MENU_END     : "#:menu" _NL

@@ -1,22 +1,29 @@
-import logging
 import re
 
-from lark import Tree
-
-from renpy_parser import utils
-from renpy_parser.graph import Graph
-from renpy_parser.renpyClasses import *
-from lark.visitors import Transformer, Transformer_InPlaceRecursive
+from lark.visitors import Transformer
 
 from renpy_parser.utils import mywarn, myassert
 
 
+class Character():
+    def __init__(self, name, color=None, image=None):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        if not isinstance(other, Character):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+        return self.name == other.name
+
+
 def parseexp(exp):
-    check = re.compile(r'^(?P<key>[^=+*/<> -]+) *(?P<op1>[=+*/<>-]+) *(?P<exp>["0-9a-zA-Z_ +*/-]+)? *$')
+    check = re.compile(r'^(?P<key>[^=+*/<> -]+) *(?P<exp>.+) *$')
     m = check.match(exp)
     myassert(m, f"Failed to parse code expression: [{exp}]")
-    # logging.debug(f"PARSE EXPRESSION [{exp}] ---> [{m.group('key')}], [{m.group('op1')}], [{m.group('exp')}]")
-    return m.group("key"), m.group("op1"), m.group("exp")
+    return m.group("key"), m.group("exp")
 
 
 class Transformer_labels(Transformer):
@@ -129,14 +136,7 @@ class Transformer1(Transformer):
         if_head, if_rest = items[0], items[1:]
         assert (if_head.data == "if_head")
         exp = "".join([str(x) for x in if_head.children])
-        key, op, val = parseexp(exp)
-        myassert(op == "==" or op == "<=" or op == ">=" or op == "<" or op == ">",
-                 f"Cannot parse IF expression operators other than ==, was [{op}] in line: [{exp}]")
-        val = self.resolve_vars(val)
-        key = self.resolve_vars(key)
-        # logging.debug(f"IF KEY: [{key}]")
-        script = f"{key}{op}{val}"
-        return "if_start", script, items[1:]
+        return "if_start", exp, items[1:]
 
     def if_else(self, items):
         return "if_else", items
@@ -187,14 +187,4 @@ class Transformer1(Transformer):
     def code_line_var(self, token):
         assert (len(token) == 1)
         exp = str(token[0]).strip()
-        key, op, val = parseexp(exp)
-        # logging.debug(f"====== KEY:[{key}]")
-        val = self.resolve_vars(val)
-        if op == "=":
-            pass
-        elif op[1] == "=" and op[0] in ('+', '-', '*', '/'):  # +=, -=, /=
-            val = f"(window.context.get('{key}')||0) {op[0]} {val}"
-        else:
-            myassert(f"Cannot parse expression: [{exp}]")
-        exp = f"window.context.set('{key}',{val})"
         return "code_line", exp

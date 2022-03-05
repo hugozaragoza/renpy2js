@@ -339,6 +339,12 @@ function appendChild(parent, type, id = null) {
     return newDiv
 }
 
+function prepare_code(str) {
+    const regex = /\b([a-z_][a-z0-9_]*)\b/ig;
+    str = str.replace(regex,"__renpy2js__$1")
+    return str
+}
+
 function render_block(block, parent) {
     //hlog("render_block")
     //log(block, "block")
@@ -355,6 +361,8 @@ function render_block(block, parent) {
         case "code_line":
             log("case code_line")
             var script = document.createElement("script");
+            evalue = prepare_code(evalue)
+            log(evalue,"CODE")
             script.innerHTML = evalue
             newDiv.appendChild(script);
             break;
@@ -405,11 +413,10 @@ function render_if_tree(tree, parent) {
         assert(if_else[0], "if_else")
     }
 
-    var exp = if_start[1];
+    var exp = prepare_code(if_start[1]);
     var if_block = if_start[2];
-    log(exp, "exp")
     var cond = Function('"use strict";return (' + exp + ')')()
-    log(cond, "cond")
+    log(cond, "EXPRESSION RESULT:")
     if (cond) {
         log("IF " + exp)
         for (b of if_block) {

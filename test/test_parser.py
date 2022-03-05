@@ -1,7 +1,7 @@
 import pytest
+
 import renpy_parser.parser as parse_factory
-from renpy_parser.renpyClasses import Character
-from renpy_parser.utils import debug
+from renpy_parser.transformer import Character
 
 
 @pytest.mark.parametrize("source,des", [
@@ -160,12 +160,13 @@ label simpleIF:
     #:if
     jump __none
 """,
-         [('label_tree', ('simpleIF', [('say_line', ('', 'Hello1')), (
-                 'if_tree', [('if_start', "(window.context.get('a')||0)==1", [('say_line', ('', 'Sentence'))])]),
-                                       ('if_tree', [
-                                           ('if_start', "(window.context.get('a')||0)==1",
-                                            [('say_line', ('', 'Hello2')), ('jump_line', 'one')]),
-                                           ('if_else', [('say_line', ('', 'Hello3')), ('jump_line', 'two')])]), ()]))]
+         [('label_tree', ('simpleIF', [('say_line', ('', 'Hello1')),
+                                       ('if_tree', [('if_start', 'a == 1', [('say_line', ('', 'Sentence'))])]), (
+                                               'if_tree',
+                                               [('if_start', 'a == 1',
+                                                 [('say_line', ('', 'Hello2')), ('jump_line', 'one')]),
+                                                ('if_else', [('say_line', ('', 'Hello3')), ('jump_line', 'two')])]),
+                                       ()]))]
          , {},),
 
         ("""\
@@ -184,8 +185,8 @@ label complexIF:
     jump __none
 """,
          [('label_tree', ('complexIF', [('say_line', ('', 'Hello1')), ('if_tree', [
-             ('if_start', "(window.context.get('a')||0)==1", [('say_line', ('', 'Hello2')), ('jump_line', 'one')])]), (
-                                                'if_tree', [('if_start', "(window.context.get('b')||0)==2",
+             ('if_start', "a == 1", [('say_line', ('', 'Hello2')), ('jump_line', 'one')])]), (
+                                                'if_tree', [('if_start', "b == 2",
                                                              [('say_line', ('', 'Hello3')), ('jump_line', 'two')]),
                                                             ('if_else', [('jump_line', 'three')])]), ()]))]
          , {},
@@ -254,12 +255,12 @@ label start:
     jump end
 """,
          [('code_line', '// hugo = Character("Hugo", image="blah")'),
-          ('code_line', "window.context.set('a_var',2)"),
+          ('code_line', "a_var = 2"),
           ('label_tree', ('start', [
-              ('code_line', "window.context.set('b_var',3)"),
-              ('code_line', "window.context.set('a_var',(window.context.get('a_var')||0) + 10)"),
+              ('code_line', "b_var = 3"),
+              ('code_line', "a_var += 10"),
               ('code_line',
-               "window.context.set('c_var',(window.context.get('c_var')||0) + (window.context.get('b_var')||0))"),
+               "c_var += b_var"),
               ('say_line', ('Hugo', 'Hello Hugo')), ('jump_line', 'end')]))]
          ,
          {"hugo": Character("Hugo", image="blah")},
@@ -282,9 +283,9 @@ jump __END
 
          [('label_tree', ('start', [
              ('say_line', ('', 'Hello')),
-             ('code_line', "window.context.set('a',1)"),
+             ('code_line', "a = 1"),
              ('if_tree', [
-                 ('if_start', "(window.context.get('a')||0)==1", [
+                 ('if_start', "a==1", [
                      ('say_line', ('', 'IF 1')), ('jump_line', 'two')]
                   )]),
              ('jump_line', '__END')])),
@@ -306,7 +307,7 @@ jump end
 """,
          [('label_tree', ('start', [
              ('if_tree', [
-                 ('if_start', "(window.context.get('a')||0)==1", [
+                 ('if_start', "a == 1", [
                      ('menu_tree',
                       [('say_line', ('', 'say if 1')),
                        ('menu_choice', (
@@ -327,9 +328,9 @@ label arthimetic:
     #:if
     jump end
 """,
-         [('label_tree', ('arthimetic', [('code_line', "window.context.set('a',(window.context.get('B')||0) + 1)"), (
+         [('label_tree', ('arthimetic', [('code_line', "a = B + 1"), (
                  'if_tree',
-                 [('if_start', "(window.context.get('B')||0)==(window.context.get('a')||0) + 1",
+                 [('if_start', "B == a + 1",
                    [('say_line', ('', 'yes'))])]),
                                          ('jump_line', 'end')]))],
          {},
