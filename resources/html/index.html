@@ -26,10 +26,14 @@
     </main>
 
     <footer>
-        <span id="button_minus" class="bottom_action" title="Decrease Font Size">a</span>
-        <span id="button_plus" class="bottom_action" title="Increase Font Size">A</span>
-        <!--        <span id="button_down" class="bottom_action">⇩</span> -->
-        <span id="button_back" class="bottom_action" title="Go Back to Previous Choice">⇦</span>
+        <div class="box">
+            <!--        <span id="button_down" class="bottom_action">⇩</span> -->
+            <span id="continue" class="display_action">TAP ANYWHERE TO START</span>
+            <span id="button_back" title="Go Back to Previous Choice">⬅</span>
+            <span id="button_plus" class="bottom_action" title="Increase Font Size">A</span>
+            <span id="button_minus" class="bottom_action" title="Decrease Font Size">a</span>
+            <span id="button_reload" title="Restart the Story">⟳</span>
+        </div>
     </footer>
 </div>
 <script>
@@ -45,7 +49,7 @@
     //canvas.addEventListener('click', (event) => { if (event.target == canvas) { revealItem(1); } }, true);
     canvas.addEventListener('click', (event) => {
         log("CLICK")
-        revealItem(1);
+        revealItem(1)
     }, true);
 
 
@@ -71,8 +75,16 @@
 
     })
 
+    document.getElementById('continue').addEventListener('click', (event) => {
+        log("CLICK")
+        revealItem(1)
+    }, true);
     document.getElementById('button_back').addEventListener('click', action_back, true);
-/*    document.getElementById('button_down').addEventListener('click', function(e){revealItem();}, true); */
+
+    document.getElementById('button_reload').onclick = function() {
+        location.reload(true);
+    }
+
     document.getElementById('button_plus').addEventListener('click', function(e){action_fontsize(+8);e.stopPropagation();}, true);
     document.getElementById('button_minus').addEventListener('click', function(e){action_fontsize(-8);e.stopPropagation();}, true);
 
@@ -80,6 +92,37 @@
     render_init()
 
     /* BACK-BUTTON:    <div>Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

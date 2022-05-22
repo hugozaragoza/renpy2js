@@ -2,29 +2,38 @@
 
 Engine to convert renpy script (interactive stories) into JavaScript HTML interactive experience.
 
-(Python Django is used only for cetralised logging server and for deployment, the story experience runs in pure client JavaScript).
+(Story experience runs in pure client JavaScript. However, for cenralised logging, it uses a tiny PHP CodeIgniter app)
 
 Hugo Ballester 2021
+
+## TODO:
+
+conditional menus:
+"Hot Springs, AR" (300) if secret_unlocked:
+jump hot_springs_trip
+
+comment # line without chars yields parse error
 
 ## Overview
 
 python main.py --help
 
 Data flow:
-  * CodeDirectory is where this project is. 
-  * StoryDirectory is where the story script (script.rpy) and the images (img/) are.
-  * OutDirectory is where the story web will be created, under directory StoryName.
-  * CodeDirectory/main.py reads the StoryDirectory and creates the OutDirectory/StoryName containing the story website:
+
+* CodeDirectory is where this project is.
+* StoryDirectory is where the story script (script.rpy) and the images (img/) are.
+* OutDirectory is where the story web will be created, under directory StoryName.
+* CodeDirectory/main.py reads the StoryDirectory and creates the OutDirectory/StoryName containing the story website:
     * script.js : story generated
     * renpy2js.js : display library
     * index.html : web interaction and story loading
     * style.css
     * styles.html : debugging styles
     * img/: (copy of StoryDirectory/img)
-  * it also copies the logger app to OutDirectory/logger
-
+* it also copies the logger app to OutDirectory/logger
 
 ## Renpy Compatibility
+
 ### Labels:
 
 PARTIALLY IMPLEMENTED:
@@ -56,10 +65,4 @@ $ VAR_NAME [+-*/]= NUM
 $ VAR_NAME = VAR_NAME2
 ```
 
-## TODO:
 
-conditional menus:
-"Hot Springs, AR" (300) if secret_unlocked:
-        jump hot_springs_trip
-
-comment # line without chars yields parse error

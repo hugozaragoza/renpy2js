@@ -30,9 +30,9 @@ function render_init() {
     }
     window.context.set(CHOICE_STACK, s);
 
-    p = render_par("Click to start...", canvas, false)
-    p.classList.add("action_color")
-    log(p.classlist,"CLASSES")
+    //p = render_par("Tap to start...", canvas, false)
+    //p.classList.add("action_color")
+    // log(p.classlist,"CLASSES")
     render_debug()
     render_start()
 
@@ -136,7 +136,7 @@ function render_debug() {
 }
 
 function revealItem(n=999) {
-    //hlog("revealItem")
+    hlog("revealItem")
     render_debug();
     var div = document.getElementById("canvas")
     while (n > 0) {
@@ -145,9 +145,25 @@ function revealItem(n=999) {
         if (lis.length < 1) {
             break
         }
-        lis[0].classList.remove("showOnClick")
-        div.scrollTop = div.scrollHeight * 100;
+        item = lis[0]
+        item.classList.remove("showOnClick")
+
+        e = document.getElementById("continue")
+        if (item.classList.contains("choices")) {
+            e.innerHTML = "CHOOSE AN OPTION";
+        }
+        else if (item.classList.contains("the_end")) {
+            e.innerHTML = "Go back with ⬅. Re-start with ↻.";
+            var els = document.querySelectorAll(".showOnClick")
+            els.forEach(function(el) {
+                el.classList.remove("showOnClick");
+            });
+        }
+        else {
+            e.innerHTML = "TAP ANYWHERE TO CONTINUE...";
+        }
     }
+    div.scrollTop = div.scrollHeight * 100;
 }
 
 // --------------------------------------------------------
@@ -236,11 +252,12 @@ function render_img(img_url, name) {
 }
 
 function render_choices(choices, parent) {
-    hlog("render_choices")
-    log(choices, "choices")
+//    hlog("render_choices")
+//    log(choices, "choices")
     lastChar = null
     var div = appendChild(parent, 'div')
     div.classList.add("showOnClick")
+    div.classList.add("choices")
     parent = div
 
     var newParagraph
@@ -475,12 +492,9 @@ function render_end(parent) {
 
     central_log_post("END: read "+current+ " lines, record is: "+max)
 
-    render_par("<b>THE END</b>", parent);
-    render_par('<p></p>', parent)
-
+    render_par("<b>THE END</b>", parent).classList.add("the_end");
     render_par("(You read " + current + " lines of the story in this run)", parent).classList.add("stats")
     render_par("(Your record is: " + max + ")", parent).classList.add("stats");
-
 /*
     p1 = render_par('<p class="choice_pending">Go back to your last choice</p>', parent)
     p2 = render_par('<p class="choice_pending">Restart from the beginning</p>', parent)

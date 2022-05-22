@@ -20,13 +20,6 @@ main {
 /* background: orange; */
 }
 
-footer {
-  touch-action: manipulation;
-
-  grid-area: footer;
-/*  background: yellow; */
-}
-
 body {
     /* stop overflow: */
     width: 100%;
@@ -46,22 +39,6 @@ a, u {
     text-decoration: none;
     color: inherit;
 }
-
-.bottom_action, .action_color {
-    color:  #53e2bb;
-    font-size: 64px;
-}
-
-.bottom_action{
-    border-radius: 100%;
-
-    text-align: center;
-    vertical-align: middle;
-
-    float: right;
-
-/*    border: 2px solid red; */
-   }
 
 #canvas {
     touch-action: manipulation;
@@ -96,13 +73,6 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-#bottom {
-    touch-action: manipulation;
-    height: 20%;
-
-    /*border: 2px solid blue;*/
 }
 
 html, body {
@@ -168,9 +138,10 @@ p {
 .line {
 }
 
+
 p.stats{
     font-family: Courier;
-    font-size: medium;
+    font-size: .5em;
 }
 
 #debug {
@@ -179,6 +150,41 @@ p.stats{
     right: 0px;
 
     background-color: coral;
-    font-size: small;
+    font-size: medium;
 
 }
+
+/* FOOTER ------------------------------------------------------------------------ */
+#bottom {
+    touch-action: manipulation;
+    height: 20%;
+
+    /*border: 2px solid blue;*/
+}
+
+
+footer {
+  touch-action: manipulation;
+  grid-area: footer;
+}
+
+.box {
+    width: 100%;
+
+    display: flex;
+    float: right;
+    align-items: center;
+
+    color:  #53e2bb;
+    font-size: 64px;
+}
+
+.display_action {
+    flex-grow: 1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-size: .5em;
+    font-family: Courier;
+    /*border: 1px solid red;*/
+}
+
