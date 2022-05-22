@@ -42,6 +42,7 @@ class Transformer_labels(Transformer):
 
 
 class Transformer1(Transformer):
+    '''Build data tree'''
 
     def __init__(self):
         '''
