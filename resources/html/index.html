@@ -22,14 +22,14 @@
     <header></header>
 
     <main>
-       <div id="canvas"></div>
+        <div id="canvas"></div>
     </main>
 
     <footer>
-        <span id="button_minus" class="bottom_action">a</span>
-        <span id="button_plus" class="bottom_action">A</span>
-        <span id="button_down" class="bottom_action">⇩</span>
-        <span id="button_back" class="bottom_action">⇦</span>
+        <span id="button_minus" class="bottom_action" title="Decrease Font Size">a</span>
+        <span id="button_plus" class="bottom_action" title="Increase Font Size">A</span>
+        <!--        <span id="button_down" class="bottom_action">⇩</span> -->
+        <span id="button_back" class="bottom_action" title="Go Back to Previous Choice">⇦</span>
     </footer>
 </div>
 <script>
@@ -72,8 +72,7 @@
     })
 
     document.getElementById('button_back').addEventListener('click', action_back, true);
-    document.getElementById('button_down').addEventListener('click', function(e){revealItem();
-    }, true);
+/*    document.getElementById('button_down').addEventListener('click', function(e){revealItem();}, true); */
     document.getElementById('button_plus').addEventListener('click', function(e){action_fontsize(+8);e.stopPropagation();}, true);
     document.getElementById('button_minus').addEventListener('click', function(e){action_fontsize(-8);e.stopPropagation();}, true);
 
@@ -81,6 +80,10 @@
     render_init()
 
     /* BACK-BUTTON:    <div>Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>*/
+
+
+
+
 </script>
 
 </body>

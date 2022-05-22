@@ -272,7 +272,6 @@ function add_click_reveal(parent) {
 }
 
 function render_par(txt, parent, hide = true) {
-    // hlog("render_par")
     var newParagraph = document.createElement('p');
     // add_click_reveal(newParagraph)
     if (txt && txt.length > 0 && txt[0] != txt[0].toUpperCase()) {
@@ -473,11 +472,21 @@ function render_end(parent) {
         max = current
         document.cookie = "__max_lines=" + max
     }
-    render_par("<b>THE END</b> <wbr> ", parent);
-    render_par("(You read " + current + " lines of the story in this run)", parent);
-    render_par("(Your record is: " + max + ")", parent);
-    render_par('<a class="choice_pending" href=\".\">RELOAD page to re-start</a>', parent)
+
     central_log_post("END: read "+current+ " lines, record is: "+max)
+
+    render_par("<b>THE END</b>", parent);
+    render_par('<p></p>', parent)
+
+    render_par("(You read " + current + " lines of the story in this run)", parent).classList.add("stats")
+    render_par("(Your record is: " + max + ")", parent).classList.add("stats");
+
+/*
+    p1 = render_par('<p class="choice_pending">Go back to your last choice</p>', parent)
+    p2 = render_par('<p class="choice_pending">Restart from the beginning</p>', parent)
+    p1.addEventListener('click', action_back, true);
+    p2.addEventListener('click', location.reload.bind(location));
+*/
     return
 }
 

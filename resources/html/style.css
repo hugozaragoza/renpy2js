@@ -168,6 +168,11 @@ p {
 .line {
 }
 
+p.stats{
+    font-family: Courier;
+    font-size: medium;
+}
+
 #debug {
     position: absolute;
     top: 0px;
